@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen de Estudios Sociales - 3er Trimestre</title>
+    <style>
+        /* Estilos CSS incrustados */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a; /* Fondo oscuro */
+            color: #e0e0e0; /* Texto claro */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: #282828; /* Contenedor más claro */
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            color: #4CAF50; /* Verde vibrante */
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .instructions {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+            color: #bbb;
+        }
+
+        /* Estilos de cada bloque de pregunta */
+        .question-block {
+            background-color: #363636; /* Fondo para cada pregunta */
+            border-radius: 6px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: block; /* Asegura que todos los bloques sean visibles */
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: #FFA000; /* Naranja */
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            margin-bottom: 15px;
+            color: #f0f0f0;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 12px;
+            cursor: pointer;
+            background-color: #444; /* Fondo de cada opción */
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .options label:hover {
+            background-color: #555;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            vertical-align: middle;
+        }
+
+        .options input[type="radio"]:disabled + span {
+            color: #888; /* Texto deshabilitado */
+            cursor: not-allowed;
+        }
+        .options label:has(input[type="radio"]:disabled) {
+            background-color: #3a3a3a; /* Fondo deshabilitado */
+            cursor: not-allowed;
+        }
+
+        .hint {
+            font-style: italic;
+            color: #888;
+            margin-top: 15px;
+            border-top: 1px solid #555;
+            padding-top: 10px;
+            font-size: 0.95em;
+        }
+
+        /* Estilos del botón de envío y resultados */
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .submit-button {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .submit-button:active {
+            background-color: #3e8e41;
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            background-color: #777;
+            cursor: not-allowed;
+        }
+
+        #results {
+            background-color: #363636;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: none; /* Inicialmente oculto */
+        }
+
+        #results h2 {
+            color: #FFA000;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        #results p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        #scoreDisplay {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 15px;
+        }
+
+        .student-info {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #363636;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .student-info label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #f0f0f0;
+        }
+
+        .student-info input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #444;
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+
+        .student-info input[type="text"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Estilos para el botón de pantalla completa */
+        #fullscreen-btn-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #enterFullscreenBtn {
+            background-color: #007BFF; /* Azul */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #enterFullscreenBtn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        #enterFullscreenBtn:active {
+            background-color: #004085;
+            transform: translateY(0);
+        }
+
+        #fullscreen-warning {
+            color: #FFC107; /* Amarillo */
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        /* Media Queries para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 20px 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .question-text {
+                font-size: 1.05em;
+            }
+
+            .options label {
+                padding: 8px 12px;
+                font-size: 0.95em;
+            }
+
+            .submit-button, #enterFullscreenBtn {
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Examen de Estudios Sociales - 3er Trimestre</h1>
+        <p class="instructions">Lee cuidadosamente cada pregunta y selecciona la opción correcta. Una vez seleccionada una respuesta para una pregunta, no podrás cambiarla. Se recomienda iniciar el examen en pantalla completa para una mejor experiencia y concentración.</p>
+
+        <div class="student-info">
+            <label for="studentName">Nombre Completo:</label>
+            <input type="text" id="studentName" name="studentName" placeholder="Escribe tu nombre y apellido" required>
+        </div>
+        <div id="fullscreen-btn-container">
+            <button id="enterFullscreenBtn">Iniciar Examen en Pantalla Completa</button>
+            <p id="fullscreen-warning">**IMPORTANTE:** Pulsa ESC para salir del modo de pantalla completa en cualquier momento.</p>
+        </div>
+
+        <form id="historyQuizForm" style="display: none;">
+            <div class="question-block">
+                <p class="question-number">1.</p>
+                <p class="question-text">¿Cuál es la principal diferencia entre pobreza absoluta y pobreza relativa?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> <span>a) La pobreza absoluta se refiere a la falta de ingresos, mientras que la relativa se mide por la desigualdad de riqueza.</span></label>
+                    <label><input type="radio" name="q1" value="b"> <span>b) La pobreza absoluta es la incapacidad de cubrir necesidades básicas, mientras que la relativa es la carencia respecto al promedio de la sociedad.</span></label>
+                    <label><input type="radio" name="q1" value="c"> <span>c) La pobreza absoluta solo existe en países desarrollados, y la relativa en países en desarrollo.</span></label>
+                    <label><input type="radio" name="q1" value="d"> <span>d) Ambas son sinónimos y miden lo mismo de diferentes maneras.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en el umbral de vida y la comparación social.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">2.</p>
+                <p class="question-text">¿Qué indicador se utiliza comúnmente para medir la desigualdad de ingresos en una población?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> <span>a) Producto Interno Bruto (PIB) per cápita.</span></label>
+                    <label><input type="radio" name="q2" value="b"> <span>b) Índice de Desarrollo Humano (IDH).</span></label>
+                    <label><input type="radio" name="q2" value="c"> <span>c) Coeficiente de Gini.</span></label>
+                    <label><input type="radio" name="q2" value="d"> <span>d) Tasa de desempleo.</span></label>
+                </div>
+                <p class="hint">Hint: Es una medida que va de 0 (igualdad perfecta) a 1 (desigualdad perfecta).</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">3.</p>
+                <p class="question-text">¿Cuál de las siguientes afirmaciones describe mejor la situación de la pobreza en América Latina en las últimas décadas?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> <span>a) La pobreza ha desaparecido por completo gracias al crecimiento económico sostenido.</span></label>
+                    <label><input type="radio" name="q3" value="b"> <span>b) Ha habido avances significativos en la reducción de la pobreza, pero la desigualdad sigue siendo un desafío persistente.</span></label>
+                    <label><input type="radio" name="q3" value="c"> <span>c) La pobreza ha aumentado drásticamente en todos los países de la región sin excepción.</span></label>
+                    <label><input type="radio" name="q3" value="d"> <span>d) La región nunca ha enfrentado problemas de pobreza o desigualdad significativos.</span></label>
+                </div>
+                <p class="hint">Hint: Considera los informes de organismos como la CEPAL.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">4.</p>
+                <p class="question-text">¿Qué factor se considera una de las causas estructurales más importantes de la pobreza en América Latina?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> <span>a) La alta productividad laboral en la mayoría de los sectores.</span></label>
+                    <label><input type="radio" name="q4" value="b"> <span>b) La falta de recursos naturales en la región.</span></label>
+                    <label><input type="radio" name="q4" value="c"> <span>c) La concentración de la tierra y la riqueza en pocas manos, y sistemas educativos y de salud deficientes.</span></label>
+                    <label><input type="radio" name="q4" value="d"> <span>d) El exceso de inversión extranjera directa que distorsiona las economías locales.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en problemas históricos y socioeconómicos arraigados.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">5.</p>
+                <p class="question-text">¿Cuál de las siguientes es una consecuencia social directa de la pobreza?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> <span>a) Aumento de la inversión en infraestructura pública.</span></label>
+                    <label><input type="radio" name="q5" value="b"> <span>b) Mejora en la calidad educativa y acceso universal a la salud.</span></label>
+                    <label><input type="radio" name="q5" value="c"> <span>c) Mayor riesgo de problemas de salud, desnutrición y exclusión social.</span></label>
+                    <label><input type="radio" name="q5" value="d"> <span>d) Fortalecimiento de la cohesión comunitaria y reducción del crimen.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en los efectos directos en el bienestar y la integración de las personas.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">6.</p>
+                <p class="question-text">La falta de acceso a servicios básicos como agua potable y saneamiento es una consecuencia de la pobreza que afecta principalmente a la dimensión:</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> <span>a) Económica.</span></label>
+                    <label><input type="radio" name="q6" value="b"> <span>b) Política.</span></label>
+                    <label><input type="radio" name="q6" value="c"> <span>c) Ambiental.</span></label>
+                    <label><input type="radio" name="q6" value="d"> <span>d) De salud y bienestar humano.</span></label>
+                </div>
+                <p class="hint">Hint: Relaciona la carencia con el impacto en la vida diaria de las personas.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">7.</p>
+                <p class="question-text">¿Cómo afecta la pobreza a la productividad a nivel nacional?</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> <span>a) La pobreza impulsa a las personas a ser más innovadoras, aumentando la productividad.</span></label>
+                    <label><input type="radio" name="q7" value="b"> <span>b) La falta de educación, salud y capital humano reduce la capacidad productiva de la fuerza laboral.</span></label>
+                    <label><input type="radio" name="q7" value="c"> <span>c) La pobreza obliga a los gobiernos a invertir más en tecnología, mejorando la productividad.</span></label>
+                    <label><input type="radio" name="q7" value="d"> <span>d) No hay una relación directa entre pobreza y productividad nacional.</span></label>
+                </div>
+                <p class="hint">Hint: Considera el capital humano y la capacidad de las personas para contribuir a la economía.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">8.</p>
+                <p class="question-text">El subempleo y el desempleo son consecuencias económicas de la pobreza que se caracterizan por:</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> <span>a) Una alta demanda de mano de obra calificada en el mercado formal.</span></label>
+                    <label><input type="radio" name="q8" value="b"> <span>b) Personas que trabajan menos horas de lo deseado o en empleos que no aprovechan sus capacidades, o que no tienen trabajo en absoluto.</span></label>
+                    <label><input type="radio" name="q8" value="c"> <span>c) Un aumento en los salarios mínimos y mejores condiciones laborales.</span></label>
+                    <label><input type="radio" name="q8" value="d"> <span>d) Un fuerte impulso a la economía informal como motor de crecimiento.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en la situación laboral precaria y la falta de oportunidades plenas.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">9.</p>
+                <p class="question-text">Aunque Ecuador se mantuvo neutral al inicio de la Segunda Guerra Mundial, ¿qué evento clave lo llevó a declarar la guerra a las potencias del Eje?</p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> <span>a) La invasión alemana de Polonia en 1939.</span></label>
+                    <label><input type="radio" name="q9" value="b"> <span>b) El ataque japonés a Pearl Harbor y la Conferencia de Río de 1942.</span></label>
+                    <label><input type="radio" name="q9" value="c"> <span>c) La ocupación francesa de París en 1940.</span></label>
+                    <label><input type="radio" name="q9" value="d"> <span>d) El bombardeo de Londres por parte de la Luftwaffe.</span></label>
+                </div>
+                <p class="hint">Hint: Considera el evento que involucró a Estados Unidos y la postura de América Latina en general.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">10.</p>
+                <p class="question-text">¿Cuál fue una de las principales contribuciones económicas de Ecuador a los Aliados durante la Segunda Guerra Mundial?</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> <span>a) El envío de un gran contingente militar para combatir en Europa.</span></label>
+                    <label><input type="radio" name="q10" value="b"> <span>b) El suministro de materias primas estratégicas como la balsa y la quinina.</span></label>
+                    <label><input type="radio" name="q10" value="c"> <span>c) La donación de armamento y tecnología militar avanzada.</span></label>
+                    <label><input type="radio" name="q10" value="d"> <span>d) La construcción de bases navales secretas para la flota aliada en sus costas.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en los recursos naturales del país y su utilidad en tiempos de guerra.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">11.</p>
+                <p class="question-text">¿Cuál fue el principal motivo de los conflictos territoriales entre Ecuador y Perú a lo largo de su historia?</p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> <span>a) Diferencias ideológicas sobre la forma de gobierno.</span></label>
+                    <label><input type="radio" name="q11" value="b"> <span>b) Disputas por el control de zonas ricas en petróleo en la costa del Pacífico.</span></label>
+                    <label><input type="radio" name="q11" value="c"> <span>c) La falta de una delimitación clara de la frontera amazónica desde la época colonial y las ambiciones sobre la salida al Amazonas.</span></label>
+                    <label><input type="radio" name="q11" value="d"> <span>d) Rivalidades deportivas y culturales históricas.</span></label>
+                </div>
+                <p class="hint">Hint: El conflicto se centró en una región específica y su acceso.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">12.</p>
+                <p class="question-text">¿Qué tratado puso fin de manera definitiva al conflicto territorial entre Ecuador y Perú en 1998?</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> <span>a) Protocolo de Río de Janeiro (1942).</span></label>
+                    <label><input type="radio" name="q12" value="b"> <span>b) Acta Presidencial de Brasilia (1998).</span></label>
+                    <label><input type="radio" name="q12" value="c"> <span>c) Tratado de Guadalupe Hidalgo (1848).</span></label>
+                    <label><input type="radio" name="q12" value="d"> <span>d) Acuerdo de Paz de Chapultepec (1992).</span></label>
+                </div>
+                <p class="hint">Hint: Recuerda el lugar donde se firmó el acuerdo final.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">13.</p>
+                <p class="question-text">Según la Constitución de Ecuador, ¿cuál es la forma de gobierno del país?</p>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> <span>a) Monarquía parlamentaria.</span></label>
+                    <label><input type="radio" name="q13" value="b"> <span>b) República unitaria, democrática, laica y presidencialista.</span></label>
+                    <label><input type="radio" name="q13" value="c"> <span>c) Dictadura militar.</span></label>
+                    <label><input type="radio" name="q13" value="d"> <span>d) Federación de estados autónomos.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en los principios fundamentales que rigen el país.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">14.</p>
+                <p class="question-text">¿Quién ejerce la función Ejecutiva en el Ecuador?</p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> <span>a) La Asamblea Nacional.</span></label>
+                    <label><input type="radio" name="q14" value="b"> <span>b) La Corte Constitucional.</span></label>
+                    <label><input type="radio" name="q14" value="c"> <span>c) El Presidente de la República y el Vicepresidente.</span></label>
+                    <label><input type="radio" name="q14" value="d"> <span>d) El Consejo de Participación Ciudadana y Control Social.</span></label>
+                </div>
+                <p class="hint">Hint: Es la cabeza del gobierno y el jefe de estado.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">15.</p>
+                <p class="question-text">¿Cuál es la función principal de la Función Legislativa en el Ecuador?</p>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> <span>a) Administrar justicia.</span></label>
+                    <label><input type="radio" name="q15" value="b"> <span>b) Dirigir la política exterior del país.</span></label>
+                    <label><input type="radio" name="q15" value="c"> <span>c) Crear, reformar y derogar leyes, así como fiscalizar y controlar los actos del gobierno.</span></label>
+                    <label><input type="radio" name="q15" value="d"> <span>d) Organizar y controlar los procesos electorales.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en el rol de la Asamblea Nacional.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">16.</p>
+                <p class="question-text">La Función Judicial en Ecuador es responsable de:</p>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="a"> <span>a) Aprobar el presupuesto general del Estado.</span></label>
+                    <label><input type="radio" name="q16" value="b"> <span>b) Garantizar la administración de justicia y el cumplimiento de las leyes.</span></label>
+                    <label><input type="radio" name="q16" value="c"> <span>c) Planificar el desarrollo del país.</span></label>
+                    <label><input type="radio" name="q16" value="d"> <span></span>d) Promover la participación ciudadana.</p>
+                </div>
+                <p class="hint">Hint: Se relaciona con los tribunales y la aplicación de la ley.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">17.</p>
+                <p class="question-text">¿Qué función del Estado ecuatoriano se encarga de garantizar los derechos de participación, promover el control social y fomentar la rendición de cuentas?</p>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="a"> <span>a) Función Ejecutiva.</span></label>
+                    <label><input type="radio" name="q17" value="b"> <span>b) Función Legislativa.</span></label>
+                    <label><input type="radio" name="q17" value="c"> <span>c) Función de Transparencia y Control Social.</span></label>
+                    <label><input type="radio" name="q17" value="d"> <span>d) Función Electoral.</span></label>
+                </div>
+                <p class="hint">Hint: Busca la función que supervisa la ética pública y la participación ciudadana.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">18.</p>
+                <p class="question-text">La Función Electoral en Ecuador tiene como responsabilidad principal:</p>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="a"> <span>a) Aprobar las leyes relacionadas con el presupuesto nacional.</span></label>
+                    <label><input type="radio" name="q18" value="b"> <span>b) Dirigir, organizar y garantizar los procesos electorales y de participación ciudadana.</span></label>
+                    <label><input type="radio" name="q18" value="c"> <span>c) Representar al país en organismos internacionales.</span></label>
+                    <label><input type="radio" name="q18" value="d"> <span>d) Ejercer el control de la constitucionalidad de los actos públicos.</span></label>
+                </div>
+                <p class="hint">Hint: Su nombre es bastante explícito sobre su propósito.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">19.</p>
+                <p class="question-text">La falta de acceso a recursos financieros, como créditos o préstamos, en poblaciones empobrecidas contribuye a:</p>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="a"> <span>a) Un aumento en la capacidad de ahorro y acumulación de capital.</span></label>
+                    <label><input type="radio" name="q19" value="b"> <span>b) La limitación de la inversión, el emprendimiento y la mejora de las condiciones de vida.</span></label>
+                    <label><input type="radio" name="q19" value="c"> <span>c) Una mayor dependencia de los mercados internacionales para la financiación.</span></label>
+                    <label><input type="radio" name="q19" value="d"> <span>d) El desarrollo de sistemas bancarios alternativos y más eficientes.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en el efecto en la capacidad de las personas para invertir en su futuro.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">20.</p>
+                <p class="question-text">¿Cuál es una de las principales críticas al uso del PIB per cápita como única medida de bienestar o desarrollo?</p>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="server"> <span id="a"> a) No considera la productividad laboral.</span></label>
+                    <label><input type="radio" name="q20" value="b"> <span>b) No refleja la distribución del ingreso ni la calidad de vida.</span></label>
+                    <label><input type="radio" name="q20" value="c"> <span>c) No incluye el crecimiento de la población.</span></label>
+                    <label><input type="radio" name="q20" value="d"> <span>d) Es una medida demasiado compleja de calcular.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en lo que el PIB ignora sobre la realidad de las personas.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">21.</p>
+                <p class="question-text">¿Cuál de las siguientes afirmaciones sobre el impacto de la globalización en la pobreza es más acertada?</p>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="a"> <span>a) La globalización siempre reduce la pobreza en todos los países por igual.</span></label>
+                    <label><input type="radio" name="q21" value="b"> <span>b) La globalización del ha creado nuevas oportunidades económicas, pero también ha exacerbado la desigualdad en algunos contextos.</span></label>
+                    <label><input type="radio" name="q21" value="c"> <span>c) La globalización no tiene ningún efecto discernible en los niveles de pobreza.</span></label>
+                    <label><input type="radio" name="q21" value="d"> <span>d) La globalización solo beneficia a los países más pobres, sin impacto en los ricos.</span></label>
+                </div>
+                <p class="hint">Hint: Considera tanto los pros como los contras de la interconexión mundial.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">22.</p>
+                <p class="question-text">El Objetivo de Desarrollo Sostenible (ODS) número 1 de la Agenda 2030 de la ONU busca:</p>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="a"> <span>a) Reducir la desigualdad entre países.</span></label>
+                    <label><input type="radio" name="q22" value="b"> <span>b) Poner fin a la pobreza en todas sus formas en todo el mundo.</span></label>
+                    <label><input type="radio" name="q22" value="c"> <span>c) Garantizar la educación de calidad para todos.</span></label>
+                    <label><input type="radio" name="q22" value="d"> <span>d) Promover la acción por el clima.</span></label>
+                </div>
+                <p class="hint">Hint: Es el objetivo principal relacionado con la erradicación de la pobreza.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">23.</p>
+                <p class="question-text">La pobreza multidimensional se diferencia de la pobreza por ingresos en que:</p>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="a"> <span>a) Solo considera la falta de dinero para medir la pobreza.</span></label>
+                    <label><input type="radio" name="q23" value="b"> <span>b) Incluye carencias en salud, educación y calidad de vida, además de los ingresos.</span></label>
+                    <label><input type="radio" name="q23" value="c"> <span>c) Solo se aplica en países desarrollados.</span></label>
+                    <label><input type="radio" name="q23" value="d"> <span>d) Es un concepto obsoleto en la medición de la pobreza.</span></label>
+                </div>
+                <p class="hint">Hint: No solo se trata de dinero, sino de acceso a servicios y derechos.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">24.</p>
+                <p class="question-text">¿Cómo contribuye el alto desempleo juvenil a la perpetuación de la pobreza?</p>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="a"> <span>a) Permite a los jóvenes dedicar más tiempo a la educación y el ocio.</span></label>
+                    <label><input type="radio" name="q24" value="b"> <span>b) Reduce la capacidad de los hogares para salir de la pobreza y genera frustración social.</span></label>
+                    <label><input type="radio" name="q24" value="c"> <span>c) Estimula la creación de nuevas empresas por parte de los jóvenes.</span></label>
+                    <label><input type="radio" name="q24" value="d"> <span>d) No tiene un impacto significativo en los niveles de pobreza a largo plazo.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en el ciclo de la pobreza y la falta de ingresos en el hogar.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">25.</p>
+                <p class="question-text">Una de las consecuencias más graves de la pobreza en la salud es:</p>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="a"> <span>a) El acceso garantizado a la atención médica de alta calidad.</span></label>
+                    <label><input type="radio" name="q25" value="b"> <span>b) El aumento de enfermedades crónicas debido al consumo excesivo de alimentos procesados.</span></label>
+                    <label><input type="radio" name="q25" value="c"> <span>c) La mayor incidencia de enfermedades infecciosas y la dificultad para acceder a tratamientos.</span></label>
+                    <label><input type="radio" name="q25" value="d"> <span>d) La disminución de la obesidad infantil.</span></label>
+                </div>
+                <p class="hint">Hint: Relaciona la falta de recursos con las condiciones de vida y el acceso a medicinas.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">26.</p>
+                <p class="question-text">¿Por qué la educación es considerada una herramienta fundamental para combatir la pobreza y la desigualdad?</p>
+                <div class="options">
+                    <label><input type="radio" name="q26" value="a"> <span>a) Solo porque permite a las personas obtener títulos universitarios.</span></label>
+                    <label><input type="radio" name="q26" value="b"> <span>b) Porque mejora las oportunidades de empleo, los ingresos y fomenta la movilidad social.</span></label>
+                    <label><input type="radio" name="q26" value="c"> <span>c) Porque enseña a las personas a aceptar su situación económica.</span></label>
+                    <label><input type="radio" name="q26" value="d"> <span>d) No tiene un impacto significativo en la reducción de la pobreza.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en el efecto a largo plazo en la vida de las personas.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">27.</p>
+                <p class="question-text">En América Latina, la pobreza rural tiende a ser más persistente debido a factores como:</p>
+                <div class="options">
+                    <label><input type="radio" name="q27" value="a"> <span>a) Mejor acceso a infraestructura y servicios básicos en comparación con las ciudades.</span></label>
+                    <label><input type="radio" name="q27" value="b"> <span>b) La dependencia de la agricultura, la falta de infraestructura y acceso limitado a mercados y educación.</span></label>
+                    <label><input type="radio" name="q27" value="c"> <span>c) Una mayor diversificación económica y menos informalidad.</span></label>
+                    <label><input type="radio" name="q27" value="d"> <span>d) La migración masiva de las ciudades al campo.</span></label>
+                </div>
+                <p class="hint">Hint: Considera las características de las zonas agrícolas y su aislamiento.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">28.</p>
+                <p class="question-text">La ayuda internacional al desarrollo es un mecanismo que busca:</p>
+                <div class="options">
+                    <label><input type="radio" name="q28" value="a"> <span>a) Reemplazar por completo los esfuerzos de los gobiernos locales.</span></label>
+                    <label><input type="radio" name="q28" value="b"> <span>b) Proporcionar recursos y apoyo a países en desarrollo para reducir la pobreza y promover el bienestar.</span></label>
+                    <label><input type="radio" name="q28" value="c"> <span>c) Generar dependencia económica de los países donantes.</span></label>
+                    <label><input type="radio" name="q28" value="d"> <span>d) Financiar exclusivamente proyectos militares.</span></label>
+                </div>
+                <p class="hint">Hint: Su objetivo es apoyar el desarrollo y mejorar las condiciones de vida.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">29.</p>
+                <p class="question-text">A nivel interno, la Segunda Guerra Mundial afectó a Ecuador generando:</p>
+                <div class="options">
+                    <label><input type="radio" name="q29" value="a"> <span>a) Un boom económico sin precedentes y una estabilidad política duradera.</span></label>
+                    <label><input type="radio" name="q29" value="b"> <span>b) Escasez de ciertos productos, inflación y tensiones sociales debido a la movilización económica.</span></label>
+                    <label><input type="radio" name="q29" value="c"> <span>c) Una disminución drástica de la migración del campo a la ciudad.</span></label>
+                    <label><input type="radio" name="q29" value="d"> <span>d) Un cese total de las exportaciones agrícolas.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en los efectos de un conflicto global en la economía doméstica.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">30.</p>
+                <p class="question-text">¿Qué papel jugó la Conferencia de Río de 1942 en la postura de los países latinoamericanos, incluyendo Ecuador, frente a la Segunda Guerra Mundial?</p>
+                <div class="options">
+                    <label><input type="radio" name="q30" value="a"> <span>a) Impulsó la neutralidad absoluta de la región.</span></label>
+                    <label><input type="radio" name="q30" value="b"> <span></span>b) Consolidó la posición de apoyo a los Aliados y la ruptura de relaciones con el Eje.</p>
+                    <label><input type="radio" name="q30" value="c"> <span>c) Fomentó la creación de un bloque militar latinoamericano independiente.</span></label>
+                    <label><input type="radio" name="q30" value="d"> <span>d) Se centró exclusivamente en temas económicos, sin abordar la guerra.</span></label>
+                </div>
+                <p class="hint">Hint: Fue un momento clave para la definición de alianzas en el continente.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">31.</p>
+                <p class="question-text">La Guerra del Cenepa (1995) fue uno de los últimos enfrentamientos armados entre Ecuador y Perú, caracterizado por:</p>
+                <div class="options">
+                    <label><input type="radio" name="q31" value="a"> <span>a) Un conflicto naval de gran escala en el Pacífico.</span></label>
+                    <label><input type="radio" name="q31" value="b"> <span>b) Un enfrentamiento terrestre en una zona no delimitada de la Cordillera del Cóndor.</span></label>
+                    <label><input type="radio" name="q31" value="c"> <span>c) Un conflicto aéreo sobre las Islas Galápagos.</span></label>
+                    <label><input type="radio" name="q31" value="d"> <span>d) Una disputa comercial sin implicaciones militares.</span></label>
+                </div>
+                <p class="hint">Hint: Recuerda la geografía del conflicto y su naturaleza.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">32.</p>
+                <p class="question-text">¿Qué países actuaron como garantes del Protocolo de Río de Janeiro y mediaron en el conflicto entre Ecuador y Perú?</p>
+                <div class="options">
+                    <label><input type="radio" name="q32" value="a"> <span>a) Colombia, Venezuela, Chile y Bolivia.</span></label>
+                    <label><input type="radio" name="q32" value="b"> <span>b) Argentina, Brasil, Chile y Estados Unidos.</span></label>
+                    <label><input type="radio" name="q32" value="c"> <span>c) México, Canadá, España y Francia.</span></label>
+                    <label><input type="radio" name="q32" value="d"> <span>d) Reino Unido, Alemania, Italia y Japón.</span></label>
+                </div>
+                <p class="hint">Hint: Busca los países que tradicionalmente han tenido un rol diplomático en la región.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">33.</p>
+                <p class="question-text">¿Por qué la Constitución de la República del Ecuador es considerada la norma suprema del ordenamiento jurídico?</p>
+                <div class="options">
+                    <label><input type="radio" name="q33" value="a"> <span>a) Porque es la más antigua de América Latina.</span></label>
+                    <label><input type="radio" name="q33" value="b"> <span>b) Porque fue redactada por el Presidente en turno.</span></label>
+                    <label><input type="radio" name="q33" value="c"> <span>c) Porque establece los derechos fundamentales, la estructura del Estado y la organización del poder público.</span></label>
+                    <label><input type="radio" name="q33" value="d"> <span>d) Porque solo regula aspectos económicos, dejando de lado los sociales.</span></label>
+                </div>
+                <p class="hint">Hint: Define las bases de la vida política y social del país.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">34.</p>
+                <p class="question-text">Una de las instituciones que forman parte de la Función de Transparencia y Control Social en Ecuador es:</p>
+                <div class="options">
+                    <label><input type="radio" name="q34" value="a"> <span>a) El Ministerio de Finanzas.</span></label>
+                    <label><input type="radio" name="q34" value="b"> <span>b) La Contraloría General del Estado.</span></label>
+                    <label><input type="radio" name="q34" value="c"> <span>c) El Banco Central del Ecuador.</span></label>
+                    <label><input type="radio" name="q34" value="d"> <span>d) La Presidencia de la República.</span></label>
+                </div>
+                <p class="hint">Hint: Se encarga de fiscalizar el uso de los recursos públicos.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">35.</p>
+                <p class="question-text">¿Qué mecanismo de participación ciudadana permite a los ciudadanos ecuatorianos proponer leyes directamente?</p>
+                <div class="options">
+                    <label><input type="radio" name="q35" value="a"> <span>a) El sufragio universal.</span></label>
+                    <label><input type="radio" name="q35" value="b"> <span>b) La iniciativa popular normativa.</span></label>
+                    <label><input type="radio" name="q35" value="c"> <span>c) La consulta popular por parte del Presidente.</span></label>
+                    <label><input type="radio" name="q35" value="d"> <span>d) La convocatoria a elecciones anticipadas.</span></label>
+                </div>
+                <p class="hint">Hint: Es una forma de democracia directa para la creación de leyes.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">36.</p>
+                <p class="question-text">Los Gobiernos Autónomos Descentralizados (GAD) en Ecuador tienen como objetivo principal:</p>
+                <div class="options">
+                    <label><input type="radio" name="q36" value="a"> <span>a) Centralizar todo el poder en la capital del país.</span></label>
+                    <label><input type="radio" name="q36" value="b"> <span>b) Administrar los recursos y servicios en sus respectivas jurisdicciones (provincias, cantones, parroquias) para el desarrollo local.</span></label>
+                    <label><input type="radio" name="q36" value="c"> <span>c) Asumir la política exterior del Estado.</span></label>
+                    <label><input type="radio" name="q36" value="d"> <span>d) Legislar sobre asuntos de seguridad nacional.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en la autonomía local y la gestión de servicios básicos.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">37.</p>
+                <p class="question-text">¿Qué rol juega la sociedad civil (ONGs, grupos comunitarios) en la lucha contra la pobreza y la desigualdad?</p>
+                <div class="options">
+                    <label><input type="radio" name="q37" value="a"> <span>a) Tienen un rol meramente decorativo y sin impacto real.</span></label>
+                    <label><input type="radio" name="q37" value="b"> <span>b) Son fundamentales para la provisión de servicios, la defensa de derechos y la incidencia política en favor de los más vulnerables.</span></label>
+                    <label><input type="radio" name="q37" value="c"> <span>c) Compiten con el Estado para acaparar recursos y poder.</span></label>
+                    <label><input type="radio" name="q37" value="d"> <span>d) Se dedican exclusivamente a actividades de ocio y recreación.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en su capacidad para llegar a donde el Estado no puede o complementar sus acciones.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">38.</p>
+                <p class="question-text">Uno de los mayores desafíos actuales para la reducción de la pobreza y la desigualdad en América Latina es:</p>
+                <div class="options">
+                    <label><input type="radio" name="q38" value="a"> <span>a) La falta de recursos naturales.</span></label>
+                    <label><input type="radio" name="q38" value="b"> <span>b) La persistencia de la corrupción y la debilidad institucional.</span></label>
+                    <label><input type="radio" name="q38" value="c"> <span>c) El exceso de población y la baja tasa de natalidad.</span></label>
+                    <label><input type="radio" name="q38" value="d"> <span>d) La ausencia de conflictos armados en la región.</span></label>
+                </div>
+                <p class="hint">Hint: Considera los obstáculos que impiden una distribución equitativa de los recursos y el buen gobierno.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">39.</p>
+                <p class="question-text">¿Cuál fue la principal consecuencia para Ecuador del Protocolo de Río de Janeiro de 1942?</p>
+                <div class="options">
+                    <label><input type="radio" name="q39" value="a"> <span>a) Obtuvo una salida soberana y amplia al río Amazonas.</span></label>
+                    <label><input type="radio" name="q39" value="b"> <span>b) Tuvo que ceder una parte importante de su territorio amazónico a Perú.</span></label>
+                    <label><input type="radio" name="q39" value="c"> <span>c) Anexó territorio del norte de Perú.</span></label>
+                    <label><input type="radio" name="q39" value="d"> <span>d) Estableció una alianza militar permanente con Perú.</span></label>
+                </div>
+                <p class="hint">Hint: Este tratado fue controversiado por sus implicaciones territoriales.</p>
+            </div>
+
+            <div class="question-block">
+                <p class="question-number">40.</p>
+                <p class="question-text">La Función de Planificación en el Ecuador (a menudo integrada en la Función Ejecutiva) se encarga de:</p>
+                <div class="options">
+                    <label><input type="radio" name="q40" value="a"> <span>a) Administrar la justicia en todos los niveles.</span></label>
+                    <label><input type="radio" name="q40" value="b"> <span>b) Diseñar y coordinar las políticas públicas y el Plan Nacional de Desarrollo.</span></label>
+                    <label><input type="radio" name="q40" value="c"> <span>c) Realizar únicamente encuestas estadísticas de población.</span></label>
+                    <label><input type="radio" name="q40" value="d"> <span>d) Supervisar la actividad de los partidos políticos.</span></label>
+                </div>
+                <p class="hint">Hint: Piensa en la visión a largo plazo del país y la coordinación de esfuerzos.</p>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-button">Terminar Examen</button>
+            </div>
+        </form>
+
+        <div id="results">
+            <h2>Resultados del Examen</h2>
+            <p>Estudiante: <span id="studentNameDisplay"></span></p>
+            <p>Fecha: <span id="examDateDisplay"></span></p>
+            <p>Has obtenido <span id="correctCount">0</span> respuestas correctas de <span id="totalQuestions"></span>.</p>
+            <p>Tu calificación final es: <span id="scoreDisplay">0 / 10</span></p>
+            <p>Número de intento: <span id="attemptCountDisplay">1</span></p>
+            <p>¡Gracias por realizar el examen! Puedes pulsar `Esc` para salir de pantalla completa.</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para manejar el formulario y el examen
+        document.addEventListener('DOMContentLoaded', function() {
+            const quizForm = document.getElementById('historyQuizForm');
+            const submitButton = document.querySelector('.submit-button');
+            const resultsDiv = document.getElementById('results');
+            const correctCountSpan = document.getElementById('correctCount');
+            const totalQuestionsSpan = document.getElementById('totalQuestions');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const studentNameInput = document.getElementById('studentName');
+            const studentNameDisplay = document.getElementById('studentNameDisplay');
+            const examDateDisplay = document.getElementById('examDateDisplay');
+            const hints = document.querySelectorAll('.hint');
+            const attemptCountDisplay = document.getElementById('attemptCountDisplay');
+            const enterFullscreenBtn = document.getElementById('enterFullscreenBtn');
+            const fullscreenBtnContainer = document.getElementById('fullscreen-btn-container');
+
+            // Ocultar pistas al cargar
+            hints.forEach(hint => hint.style.display = 'none');
+
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'c', q6: 'd', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+                q11: 'c', q12: 'b', q13: 'b', q14: 'c', q15: 'c', q16: 'b', q17: 'c', q18: 'b', q19: 'b', q20: 'b',
+                q21: 'b', q22: 'b', q23: 'b', q24: 'b', q25: 'c', q26: 'b', q27: 'b', q28: 'b', q29: 'b', q30: 'b',
+                q31: 'b', q32: 'b', q33: 'c', q34: 'b', q35: 'b', q36: 'b', q37: 'b', q38: 'b', q39: 'b', q40: 'b'
+            };
+
+            const totalQuestions = Object.keys(correctAnswers).length;
+            totalQuestionsSpan.textContent = totalQuestions;
+
+            // Contador de intentos
+            const ATTEMPT_KEY_PREFIX = 'examAttempt_';
+
+            function getAttemptKey(studentName) {
+                return ATTEMPT_KEY_PREFIX + studentName.trim().toLowerCase().replace(/\s+/g, '_');
+            }
+
+            function getStudentAttempts(studentName) {
+                const key = getAttemptKey(studentName);
+                const attempts = localStorage.getItem(key);
+                return attempts ? parseInt(attempts, 10) : 0;
+            }
+
+            function setStudentAttempts(studentName, count) {
+                const key = getAttemptKey(studentName);
+                localStorage.setItem(key, count.toString());
+            }
+
+            let currentAttempt = 0;
+
+            studentNameInput.addEventListener('input', function() {
+                const name = studentNameInput.value.trim();
+                if (name) {
+                    currentAttempt = getStudentAttempts(name);
+                } else {
+                    currentAttempt = 0;
+                }
+            });
+
+            // Función para pantalla completa
+            function enterFullscreen(element) {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            }
+
+            // Botón de pantalla completa
+            enterFullscreenBtn.addEventListener('click', function() {
+                const studentFullName = studentNameInput.value.trim();
+                if (!studentFullName) {
+                    alert('Por favor, ingresa tu nombre completo antes de iniciar el examen.');
+                    studentNameInput.focus();
+                    return;
+                }
+
+                currentAttempt = getStudentAttempts(studentFullName) + 1;
+                setStudentAttempts(studentFullName, currentAttempt);
+
+                enterFullscreen(document.documentElement);
+                fullscreenBtnContainer.style.display = 'none';
+                quizForm.style.display = 'block'; // Mostrar todas las preguntas
+                console.log('Formulario mostrado con', totalQuestions, 'preguntas'); // Depuración
+            });
+
+            // Deshabilitar radios después de seleccionar
+            quizForm.addEventListener('change', function(event) {
+                if (event.target.type === 'radio' && event.target.name.startsWith('q')) {
+                    const questionName = event.target.name;
+                    const radioButtonsForQuestion = document.querySelectorAll(`input[name="${questionName}"]`);
+                    radioButtonsForQuestion.forEach(radio => {
+                        radio.disabled = true;
+                    });
+                }
+            });
+
+            // Envío del formulario
+            quizForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                if (!studentNameInput.value.trim()) {
+                    alert('Error: Nombre del estudiante no encontrado. Por favor, recarga la página e intenta de nuevo.');
+                    return;
+                }
+
+                let score = 0;
+
+                // Recolectar respuestas
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const questionName = `q${i}`;
+                    const selectedOption = quizForm.querySelector(`input[name="${questionName}"]:checked`);
+                    if (selectedOption) {
+                        const userAnswer = selectedOption.value;
+                        if (userAnswer === correctAnswers[questionName]) {
+                            score++;
+                        }
+                    }
+                }
+
+                const finalGrade = (score / totalQuestions) * 10;
+
+                studentNameDisplay.textContent = studentNameInput.value.trim();
+                examDateDisplay.textContent = new Date().toLocaleDateString('es-EC', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                correctCountSpan.textContent = score;
+                scoreDisplay.textContent = `${finalGrade.toFixed(2)} / 10`;
+                attemptCountDisplay.textContent = currentAttempt;
+                resultsDiv.style.display = 'block';
+
+                // Deshabilitar formulario
+                const allFormElements = quizForm.elements;
+                for (let i = 0; i < allFormElements.length; i++) {
+                    allFormElements[i].disabled = true;
+                }
+                submitButton.textContent = 'Examen Finalizado';
+                submitButton.disabled = true;
+
+                // Prevenir navegación atrás
+                window.history.pushState(null, null, window.location.href);
+                window.addEventListener('popstate', function(event) {
+                    window.history.pushState(null, null, window.location.href);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
